@@ -1,0 +1,29 @@
+{
+  "id": "0e9d6bcd-eefd-4b2d-9b5d-ab8dfbbd4eff",
+  "title": "Antigua Vulcan",
+  "country": "Guatemala",
+  "description": "Grown in volcanic soil, this coffee offers a spicy kick with a deep chocolate finish.",
+  "roasterComment": "Volcanic soil gives this coffee a unique smokiness. It's robust and intense, pairing perfectly with desserts.",
+  "imageUrl": "assets/flags/gt.svg",
+  "details": {
+    "process": "Washed",
+    "region": "Antigua",
+    "variety": ["Bourbon", "Caturra"],
+    "scaScore": 84.0
+  },
+  "flavorProfile": {
+    "notes": ["Dark Cocoa", "Smoke", "Allspice", "Grapefruit"],
+    "acidity": 6,
+    "sweetness": 5,
+    "bitterness": 5
+  },
+  "recipes": [
+    {
+      "id": "r1", "method": "V60", "grindSize": "EK43 - 8.8", "waterTemp": 95, "doseIn": 18, "doseOut": 280, "timeTotal": "3:00",
+      "steps": ["0:00 - Bloom 50g", "0:30 - Pour 100g", "1:30 - Pour 280g"]
+    },
+    {
+      "id": "r2", "method": "Espresso", "grindSize": "Mythos - 4.1", "waterTemp": 94, "doseIn": 18, "doseOut": 36, "timeTotal": "26s", "steps": []
+    }
+  ]
+}

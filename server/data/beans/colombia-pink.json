@@ -1,0 +1,29 @@
+{
+  "id": "3d7d6bcd-ddfd-4b2d-9b5d-ab8dfbbd4daa",
+  "title": "Huila Pink Bourbon",
+  "country": "Colombia",
+  "description": "Complex and juicy. The anaerobic fermentation brings out exotic fruit notes and a yogurt-like body.",
+  "roasterComment": "Pink Bourbon is a rare mutation, and combined with anaerobic fermentation, it creates a flavor bomb of tropical fruits.",
+  "imageUrl": "assets/flags/co.svg",
+  "details": {
+    "process": "Anaerobic",
+    "region": "Huila",
+    "variety": ["Pink Bourbon"],
+    "scaScore": 86.0
+  },
+  "flavorProfile": {
+    "notes": ["Watermelon", "Strawberry Yogurt", "Lime", "Brown Sugar"],
+    "acidity": 7,
+    "sweetness": 7,
+    "bitterness": 3
+  },
+  "recipes": [
+    {
+      "id": "r1", "method": "V60", "grindSize": "EK43 - 8", "waterTemp": 90, "doseIn": 16, "doseOut": 250, "timeTotal": "2:45",
+      "steps": ["0:00 - Bloom 50g", "0:40 - Center Pour to 250g"]
+    },
+    {
+      "id": "r2", "method": "Espresso", "grindSize": "Mythos - 4.0", "waterTemp": 92, "doseIn": 18, "doseOut": 40, "timeTotal": "26s", "steps": []
+    }
+  ]
+}

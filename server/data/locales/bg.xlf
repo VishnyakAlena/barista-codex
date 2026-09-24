@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="bg">
+  <file id="f1">
+    <!-- Filters -->
+    <unit id="ui.bean"><segment><source>Bean</source><target>Зърна</target></segment></unit>
+    <unit id="ui.beverage"><segment><source>Beverage</source><target>Напитки</target></segment></unit>
+    <unit id="ui.dessert"><segment><source>Dessert</source><target>Десерти</target></segment></unit>
+
+    <!-- Actions -->
+    <unit id="ui.add"><segment><source>Add</source><target>Добави</target></segment></unit>
+    <unit id="ui.edit"><segment><source>Edit</source><target>Редактирай</target></segment></unit>
+    <unit id="ui.delete"><segment><source>Delete</source><target>Изтрий</target></segment></unit>
+
+    <!-- Labels -->
+    <unit id="label.region"><segment><source>REGION</source><target>РЕГИОН</target></segment></unit>
+    <unit id="label.process"><segment><source>PROCESSING</source><target>ОБРАБОТКА</target></segment></unit>
+    <unit id="label.acidity"><segment><source>ACIDITY</source><target>КИСЕЛИННОСТ</target></segment></unit>
+    <unit id="label.variety"><segment><source>VARIETY</source><target>СОРТ</target></segment></unit>
+    <unit id="label.flavor"><segment><source>FLAVOR PROFILE</source><target>ВКУСОВ ПРОФИЛ</target></segment></unit>
+    <unit id="label.sweetness"><segment><source>SWEETNESS</source><target>СЛАДОСТ</target></segment></unit>
+    <unit id="label.bitterness"><segment><source>BITTERNESS</source><target>ГОРЧИВИНА</target></segment></unit>
+    <unit id="label.score"><segment><source>SCORE</source><target>ОЦЕНКА</target></segment></unit>
+
+    <!-- Recipe & Footer -->
+    <unit id="rec.v60"><segment><source>OUR RECIPE FOR V60</source><target>НАШАТА РЕЦЕПТА ЗА V60</target></segment></unit>
+    <unit id="rec.espresso"><segment><source>OUR ESPRESSO RECIPE</source><target>НАШАТА ЕСПРЕСО РЕЦЕПТА</target></segment></unit>
+    <unit id="rec.roaster"><segment><source>ROASTER'S COMMENT</source><target>КОМЕНТАР НА ПЕКАРЯ</target></segment></unit>
+  </file>
+</xliff>

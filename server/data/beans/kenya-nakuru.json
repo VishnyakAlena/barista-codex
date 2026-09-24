@@ -1,0 +1,42 @@
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Nakuru AB",
+  "country": "Kenya",
+  "description": "Bright, berry-like, slightly citrusy, slightly tart like ripe persimmon and sweet like rosehip compote.",
+  "roasterComment": "A textbook Kenyan coffee. The acidity is vibrant but balanced by a deep sweetness. It shines best on filter methods.",
+  "imageUrl": "assets/flags/ke.svg",
+  "details": {
+    "process": "Washed",
+    "region": "Nakuru",
+    "variety": ["SL 34", "SL 28", "Ruiru 11", "Batian"],
+    "scaScore": 83.5
+  },
+  "flavorProfile": {
+    "notes": ["Quince", "Lemon", "Raspberry", "Rosehip"],
+    "acidity": 6,
+    "sweetness": 5,
+    "bitterness": 3
+  },
+  "recipes": [
+    {
+      "id": "rec-1",
+      "method": "V60",
+      "grindSize": "EK43 - 8",
+      "waterTemp": 98,
+      "doseIn": 16,
+      "doseOut": 260,
+      "timeTotal": "2:30",
+      "steps": ["0:00 - Bloom 50g", "0:30 - Pour to 100g", "1:30 - Pour to 260g"]
+    },
+    {
+      "id": "rec-2",
+      "method": "Espresso",
+      "grindSize": "Mythos - 4.5",
+      "waterTemp": 93,
+      "doseIn": 18,
+      "doseOut": 36,
+      "timeTotal": "28s",
+      "steps": []
+    }
+  ]
+}

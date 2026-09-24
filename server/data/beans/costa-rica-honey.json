@@ -1,0 +1,29 @@
+{
+  "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+  "title": "Yirgacheffe Halo Beriti",
+  "country": "Ethiopia",
+  "description": "A classic Ethiopian coffee. Delicate floral notes mixed with stone fruits and a tea-like body.",
+  "roasterComment": "The benchmark for washed Ethiopia. It is elegant, floral, and tea-like. Best enjoyed black to appreciate the jasmine aroma.",
+  "imageUrl": "assets/flags/et.svg",
+  "details": {
+    "process": "Washed",
+    "region": "Gedeo Zone",
+    "variety": ["Kurume", "Dega", "Wolisho"],
+    "scaScore": 87.5
+  },
+  "flavorProfile": {
+    "notes": ["Jasmine", "Peach", "Earl Grey", "Lemon"],
+    "acidity": 8,
+    "sweetness": 6,
+    "bitterness": 2
+  },
+  "recipes": [
+    {
+      "id": "r1", "method": "V60", "grindSize": "EK43 - 8.5", "waterTemp": 94, "doseIn": 15, "doseOut": 250, "timeTotal": "2:40",
+      "steps": ["0:00 - Bloom 40g", "0:40 - Pour to 150g", "1:40 - Pour to 250g"]
+    },
+    {
+      "id": "r2", "method": "Espresso", "grindSize": "Mythos - 3.8", "waterTemp": 95, "doseIn": 19, "doseOut": 45, "timeTotal": "30s", "steps": []
+    }
+  ]
+}

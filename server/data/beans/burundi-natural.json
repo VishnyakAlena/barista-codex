@@ -1,0 +1,29 @@
+{
+  "id": "9d1d6bcd-ddfd-4b2d-9b5d-ab8dfbbd4dee",
+  "title": "Kayanza Natural",
+  "country": "Burundi",
+  "description": "Funky and wild. High intensity fruit notes often compared to red wine or cooked plums.",
+  "roasterComment": "For those who love experiments. It's wild, funky, and tastes almost like a fruit compote with a splash of rum.",
+  "imageUrl": "assets/flags/bi.svg",
+  "details": {
+    "process": "Natural",
+    "region": "Kayanza",
+    "variety": ["Red Bourbon"],
+    "scaScore": 86.5
+  },
+  "flavorProfile": {
+    "notes": ["Plum", "Blueberry", "Red Wine", "Dark Cherry"],
+    "acidity": 6,
+    "sweetness": 8,
+    "bitterness": 3
+  },
+  "recipes": [
+    {
+      "id": "r1", "method": "V60", "grindSize": "EK43 - 8.5", "waterTemp": 92, "doseIn": 16, "doseOut": 250, "timeTotal": "2:45",
+      "steps": ["0:00 - Bloom 50g", "0:45 - Pour to 250g"]
+    },
+    {
+      "id": "r2", "method": "Espresso", "grindSize": "Mythos - 4.0", "waterTemp": 93, "doseIn": 19, "doseOut": 42, "timeTotal": "29s", "steps": []
+    }
+  ]
+}

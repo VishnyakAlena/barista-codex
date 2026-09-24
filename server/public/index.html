@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Third Wave Coffee</title>
+    <!-- Fonts: Syne & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Syne:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Icons: Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="main-header">
+    <div class="logo">Third Wave</div>
+
+    <nav class="category-nav">
+        <button class="nav-btn active" data-type="bean">
+            <i data-lucide="bean"></i> <span data-i18n="ui.bean">Bean</span>
+        </button>
+        <button class="nav-btn" data-type="beverage">
+            <i data-lucide="cup-soda"></i> <span data-i18n="ui.beverage">Beverage</span>
+        </button>
+        <button class="nav-btn" data-type="dessert">
+            <i data-lucide="cake-slice"></i> <span data-i18n="ui.dessert">Dessert</span>
+        </button>
+    </nav>
+
+    <div class="lang-switcher">
+        <img id="current-lang-flag" src="assets/flags/gb.svg" alt="Flag">
+
+        <span id="lang-text">EN</span>
+
+        <select id="lang-select">
+            <option value="en">EN</option>
+            <option value="it">IT</option>
+            <option value="bg">BG</option>
+        </select>
+
+        <i data-lucide="chevron-down" class="chevron"></i>
+    </div>
+</header>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+    <button id="btn-add-bean" class="tool-btn">
+        <span data-i18n="ui.add">Add</span> <i data-lucide="plus"></i>
+    </button>
+    <button id="btn-edit" class="tool-btn">
+        <span data-i18n="ui.edit">Edit</span> <i data-lucide="pencil"></i>
+    </button>
+    <button id="btn-delete" class="tool-btn">
+        <span data-i18n="ui.delete">Delete</span> <i data-lucide="trash-2"></i>
+    </button>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="app-container">
+
+    <!-- LEFT: LIST -->
+    <section class="list-column">
+        <div id="bean-list" class="cards-container">
+            <!-- JS отрисует карточки здесь -->
+            <div class="loading">Loading...</div>
+        </div>
+    </section>
+
+    <!-- RIGHT: DETAILS -->
+    <section class="details-column">
+
+        <!-- Empty State -->
+        <div id="placeholder-view" class="empty-state">
+            <p>Select an item to view details</p>
+        </div>
+
+        <!-- Detail Card -->
+        <div id="details-view" class="detail-card hidden">
+
+            <div class="detail-top">
+                <h1 id="detail-title" data-field="title">Title</h1>
+                <div class="flag-circle">
+                    <!-- Флаг ставится через JS -->
+                    <img id="detail-flag-img" src="" alt="">
+                </div>
+            </div>
+
+            <div class="detail-desc">
+                <p id="detail-description" data-field="description">Description goes here...</p>
+            </div>
+
+            <!-- Attributes Grid -->
+            <div class="attributes-grid">
+                <div class="attr-box">
+                    <label data-i18n="label.region">REGION</label>
+                    <div id="detail-region" class="val">-</div>
+                </div>
+                <div class="attr-box">
+                    <label data-i18n="label.flavor">FLAVOR PROFILE</label>
+                    <div id="detail-tags" class="val">-</div>
+                </div>
+
+                <div class="attr-box">
+                    <label data-i18n="label.process">PROCESSING</label>
+                    <div id="detail-process" class="val">-</div>
+                </div>
+
+                <div class="attr-box">
+                    <label data-i18n="label.sweetness">SWEETNESS</label>
+                    <div id="detail-sweetness" class="val">0/10</div>
+                </div>
+                <div class="attr-box">
+                    <label data-i18n="label.acidity">ACIDITY</label>
+                    <div id="detail-acidity" class="val">0/10</div>
+                </div>
+                <div class="attr-box">
+                    <label data-i18n="label.bitterness">BITTERNESS</label>
+                    <div id="detail-bitterness" class="val">0/10</div>
+                </div>
+
+                <div class="attr-box">
+                    <label data-i18n="label.variety">VARIETY</label>
+                    <div id="detail-variety" class="val">-</div>
+                </div>
+                <div class="attr-box score-box">
+                    <label data-i18n="label.score">SCORE</label>
+                    <div id="detail-score" class="val score-val">-</div>
+                </div>
+            </div>
+
+            <!-- Recipes -->
+            <div class="recipes-container">
+                <div class="recipe-col">
+                    <label data-i18n="rec.v60">OUR RECIPE FOR V60:</label>
+                    <div id="rec-v60-text" class="recipe-text"></div>
+                </div>
+                <div class="recipe-col">
+                    <label data-i18n="rec.espresso">OUR ESPRESSO RECIPE:</label>
+                    <div id="rec-espresso-text" class="recipe-text"></div>
+                </div>
+            </div>
+
+            <!-- Roaster Comment -->
+            <div class="roaster-section">
+                <label data-i18n="rec.roaster">ROASTER'S COMMENT:</label>
+                <p id="detail-comment" class="comment-text">No comment.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- MODAL -->
+<div id="bean-modal" class="modal hidden">
+    <div class="modal-content">
+        <h2 id="modal-title">Edit Item</h2>
+        <form id="bean-form">
+            <input type="hidden" id="form-id">
+
+            <!-- Основное -->
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="form-title" required placeholder="e.g. Nakuru AB">
+            </div>
+
+            <!-- География и Детали -->
+            <div class="form-row">
+                <div class="form-group" style="flex:1"><label>Country</label><input type="text" id="form-country" required></div>
+                <div class="form-group" style="flex:1"><label>Region</label><input type="text" id="form-region" placeholder="e.g. Nyeri"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex:1"><label>Variety</label><input type="text" id="form-variety" placeholder="SL-28, SL-34"></div>
+                <div class="form-group" style="flex:1"><label>SCA Score</label><input type="number" id="form-score" step="0.1"></div>
+            </div>
+
+            <!-- Картинка и Обработка -->
+            <div class="form-row">
+                <div class="form-group" style="flex:1">
+                    <label>Image</label>
+                    <select id="form-image">
+                        <option value="assets/flags/default.svg">Default</option>
+                        <option value="assets/flags/ke.svg">Kenya</option>
+                        <option value="assets/flags/et.svg">Ethiopia</option>
+                        <option value="assets/flags/br.svg">Brazil</option>
+                        <option value="assets/flags/co.svg">Colombia</option>
+                        <option value="assets/flags/bi.svg">Burundi</option>
+                        <option value="assets/flags/pa.svg">Panama</option>
+                        <option value="assets/flags/rw.svg">Rwanda</option>
+                        <option value="assets/flags/gt.svg">Guatemala</option>
+                        <option value="assets/flags/cr.svg">Costa Rica</option>
+                        <option value="assets/flags/id.svg">Indonesia</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label>Process</label>
+                    <select id="form-process">
+                        <option>Washed</option>
+                        <option>Natural</option>
+                        <option>Honey</option>
+                        <option>Anaerobic</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Вкусовые Оценки (Новое!) -->
+            <label style="font-size: 12px; font-weight: 700; display:block; margin-bottom: 5px;">TASTE PROFILE (1-10)</label>
+            <div class="form-row" style="margin-bottom: 16px;">
+                <div class="form-group" style="flex:1">
+                    <label style="font-size: 10px;">Acidity</label>
+                    <input type="number" id="form-acidity" min="1" max="10" value="5">
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label style="font-size: 10px;">Sweetness</label>
+                    <input type="number" id="form-sweetness" min="1" max="10" value="5">
+                </div>
+                <div class="form-group" style="flex:1">
+                    <label style="font-size: 10px;">Bitterness</label>
+                    <input type="number" id="form-bitterness" min="1" max="10" value="5">
+                </div>
+            </div>
+
+            <!-- Описания -->
+            <div class="form-group"><label>Flavor Notes (comma separated)</label><input type="text" id="form-notes"></div>
+            <div class="form-group"><label>Description</label><textarea id="form-description" rows="2"></textarea></div>
+            <div class="form-group"><label>Roaster's Comment</label><textarea id="form-comment" rows="2"></textarea></div>
+
+            <div class="modal-actions">
+                <button type="button" id="btn-cancel" class="btn-secondary">Cancel</button>
+                <button type="submit" class="btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Init Icons -->
+<script>
+    lucide.createIcons();
+</script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

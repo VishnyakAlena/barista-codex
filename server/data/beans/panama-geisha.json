@@ -1,0 +1,29 @@
+{
+  "id": "5f5d6bcd-fffd-4b2d-9b5d-ab8dfbbd4faa",
+  "title": "Boquete Geisha",
+  "country": "Panama",
+  "description": "One of the most prized varieties in the world. Elegant, tea-like, and incredibly aromatic.",
+  "roasterComment": "The queen of coffee. Handle with care: use soft water and respect the delicate floral notes. A true luxury experience.",
+  "imageUrl": "assets/flags/pa.svg",
+  "details": {
+    "process": "Washed",
+    "region": "Boquete",
+    "variety": ["Geisha"],
+    "scaScore": 91.5
+  },
+  "flavorProfile": {
+    "notes": ["Jasmine", "Lemongrass", "Bergamot", "Honeysuckle"],
+    "acidity": 7,
+    "sweetness": 8,
+    "bitterness": 1
+  },
+  "recipes": [
+    {
+      "id": "r1", "method": "V60", "grindSize": "EK43 - 9", "waterTemp": 91, "doseIn": 15, "doseOut": 250, "timeTotal": "2:30",
+      "steps": ["0:00 - Bloom 40g", "0:30 - Pour 60g", "1:00 - Pour 150g"]
+    },
+    {
+      "id": "r2", "method": "Espresso", "grindSize": "Mythos - 3.9", "waterTemp": 92, "doseIn": 19, "doseOut": 50, "timeTotal": "25s", "steps": []
+    }
+  ]
+}

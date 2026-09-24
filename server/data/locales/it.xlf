@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="it">
+  <file id="f1">
+    <!-- Filters -->
+    <unit id="ui.bean"><segment><source>Bean</source><target>Chicchi</target></segment></unit>
+    <unit id="ui.beverage"><segment><source>Beverage</source><target>Bevande</target></segment></unit>
+    <unit id="ui.dessert"><segment><source>Dessert</source><target>Dolci</target></segment></unit>
+
+    <!-- Actions -->
+    <unit id="ui.add"><segment><source>Add</source><target>Aggiungi</target></segment></unit>
+    <unit id="ui.edit"><segment><source>Edit</source><target>Modifica</target></segment></unit>
+    <unit id="ui.delete"><segment><source>Delete</source><target>Elimina</target></segment></unit>
+
+    <!-- Labels -->
+    <unit id="label.region"><segment><source>REGION</source><target>REGIONE</target></segment></unit>
+    <unit id="label.process"><segment><source>PROCESSING</source><target>LAVORAZIONE</target></segment></unit>
+    <unit id="label.acidity"><segment><source>ACIDITY</source><target>ACIDITÀ</target></segment></unit>
+    <unit id="label.variety"><segment><source>VARIETY</source><target>VARIETÀ</target></segment></unit>
+    <unit id="label.flavor"><segment><source>FLAVOR PROFILE</source><target>PROFILO AROMATICO</target></segment></unit>
+    <unit id="label.sweetness"><segment><source>SWEETNESS</source><target>DOLCEZZA</target></segment></unit>
+    <unit id="label.bitterness"><segment><source>BITTERNESS</source><target>AMAREZZA</target></segment></unit>
+    <unit id="label.score"><segment><source>SCORE</source><target>PUNTEGGIO</target></segment></unit>
+
+    <!-- Recipe & Footer -->
+    <unit id="rec.v60"><segment><source>OUR RECIPE FOR V60</source><target>LA NOSTRA RICETTA V60</target></segment></unit>
+    <unit id="rec.espresso"><segment><source>OUR ESPRESSO RECIPE</source><target>LA NOSTRA RICETTA ESPRESSO</target></segment></unit>
+    <unit id="rec.roaster"><segment><source>ROASTER'S COMMENT</source><target>IL COMMENTO DEL TOSTATORE</target></segment></unit>
+  </file>
+</xliff>

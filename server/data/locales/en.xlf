@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="en">
+  <file id="f1">
+    <!-- Filters -->
+    <unit id="ui.bean"><segment><source>Bean</source><target>Bean</target></segment></unit>
+    <unit id="ui.beverage"><segment><source>Beverage</source><target>Beverage</target></segment></unit>
+    <unit id="ui.dessert"><segment><source>Dessert</source><target>Dessert</target></segment></unit>
+
+    <!-- Actions -->
+    <unit id="ui.add"><segment><source>Add</source><target>Add</target></segment></unit>
+    <unit id="ui.edit"><segment><source>Edit</source><target>Edit</target></segment></unit>
+    <unit id="ui.delete"><segment><source>Delete</source><target>Delete</target></segment></unit>
+
+    <!-- Labels -->
+    <unit id="label.region"><segment><source>REGION</source><target>REGION</target></segment></unit>
+    <unit id="label.process"><segment><source>PROCESSING</source><target>PROCESSING</target></segment></unit>
+    <unit id="label.acidity"><segment><source>ACIDITY</source><target>ACIDITY</target></segment></unit>
+    <unit id="label.variety"><segment><source>VARIETY</source><target>VARIETY</target></segment></unit>
+    <unit id="label.flavor"><segment><source>FLAVOR PROFILE</source><target>FLAVOR PROFILE</target></segment></unit>
+    <unit id="label.sweetness"><segment><source>SWEETNESS</source><target>SWEETNESS</target></segment></unit>
+    <unit id="label.bitterness"><segment><source>BITTERNESS</source><target>BITTERNESS</target></segment></unit>
+    <unit id="label.score"><segment><source>SCORE</source><target>SCORE</target></segment></unit>
+
+    <!-- Recipe & Footer -->
+    <unit id="rec.v60"><segment><source>OUR RECIPE FOR V60</source><target>OUR RECIPE FOR V60</target></segment></unit>
+    <unit id="rec.espresso"><segment><source>OUR ESPRESSO RECIPE</source><target>OUR ESPRESSO RECIPE</target></segment></unit>
+    <unit id="rec.roaster"><segment><source>ROASTER'S COMMENT</source><target>ROASTER'S COMMENT</target></segment></unit>
+  </file>
+</xliff>

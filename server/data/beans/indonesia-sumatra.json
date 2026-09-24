@@ -1,0 +1,29 @@
+{
+  "id": "6a4d6bcd-aafd-4b2d-9b5d-ab8dfbbd4add",
+  "title": "Sumatra Mandheling",
+  "country": "Indonesia",
+  "description": "Heavy body with low acidity. Known for its earthy, spicy, and woody characteristics.",
+  "roasterComment": "Not for everyone, but loved by many. It's intense, earthy, and has practically zero acidity. A true comfort coffee.",
+  "imageUrl": "assets/flags/id.svg",
+  "details": {
+    "process": "Wet Hulled",
+    "region": "North Sumatra",
+    "variety": ["Ateng", "Tim Tim"],
+    "scaScore": 81.0
+  },
+  "flavorProfile": {
+    "notes": ["Cedar", "Dark Chocolate", "Clove", "Earth"],
+    "acidity": 2,
+    "sweetness": 4,
+    "bitterness": 6
+  },
+  "recipes": [
+    {
+      "id": "r1", "method": "V60", "grindSize": "EK43 - 9.5", "waterTemp": 88, "doseIn": 20, "doseOut": 300, "timeTotal": "3:10",
+      "steps": ["0:00 - Bloom 60g", "1:00 - Slow Pour to 300g"]
+    },
+    {
+      "id": "r2", "method": "Espresso", "grindSize": "Mythos - 4.3", "waterTemp": 92, "doseIn": 20, "doseOut": 30, "timeTotal": "25s", "steps": []
+    }
+  ]
+}
