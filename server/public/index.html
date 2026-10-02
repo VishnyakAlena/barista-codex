@@ -81,7 +81,10 @@
         <div id="details-view" class="detail-card hidden">
 
             <div class="detail-top">
-                <h1 id="detail-title" data-field="title">Title</h1>
+                <div>
+                    <h1 id="detail-title" data-field="title">Title</h1>
+                    <div id="detail-type" class="detail-type">Type</div>
+                </div>
                 <div class="flag-circle">
                     <!-- Флаг ставится через JS -->
                     <img id="detail-flag-img" src="" alt="">
@@ -163,6 +166,14 @@
             <div class="form-group">
                 <label>Title</label>
                 <input type="text" id="form-title" required placeholder="e.g. Nakuru AB">
+            </div>
+            <div class="form-group">
+                <label for="form-type">Type</label>
+                <select id="form-type" required>
+                    <option value="Bean">Bean</option>
+                    <option value="Beverage">Beverage</option>
+                    <option value="Dessert">Dessert</option>
+                </select>
             </div>
 
             <!-- География и Детали -->

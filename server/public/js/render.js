@@ -1,6 +1,7 @@
 /**
  * Renders the sidebar list
  */
+
 export function renderBeanList(beans, onSelect) {
     const listContainer = document.getElementById('bean-list');
     listContainer.innerHTML = '';
@@ -13,9 +14,14 @@ export function renderBeanList(beans, onSelect) {
 
         const imgUrl = bean.imageUrl || 'assets/flags/default.svg';
 
+        console.log("Данные, которые пришли с сервера:", bean);
+
+        const typeKey = `ui.${(bean.type || 'bean').toLowerCase()}`;
+
         item.innerHTML = `
             <div class="card-text">
                 <h2>${bean.title}</h2>
+                <p class="detail-type" data-i18n="${typeKey}">${bean.type}</p>
                 <p>${bean.description.substring(0, 60)}...</p>
             </div>
             <div class="card-flag-wrap">
@@ -39,6 +45,14 @@ export function renderBeanList(beans, onSelect) {
 export function renderBeanDetails(bean) {
     // Top Info
     setText('detail-title', bean.title);
+    const typeKey = `ui.${(bean.type || 'bean').toLowerCase()}`; 
+    const typeEl = document.getElementById('detail-type');
+
+    if (typeEl) {
+        typeEl.setAttribute('data-i18n', typeKey);
+        typeEl.textContent = bean.type || 'Bean'; 
+    }
+
 
     // Flag in detail view
     const flagImg = document.getElementById('detail-flag-img');

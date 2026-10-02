@@ -66,6 +66,7 @@ document.getElementById('bean-form').addEventListener('submit', async (e) => {
 
     const formData = {
         title: document.getElementById('form-title').value,
+        type: document.getElementById('form-type').value,
         country: document.getElementById('form-country').value,
         description: document.getElementById('form-description').value,
         imageUrl: document.getElementById('form-image').value,
@@ -168,6 +169,7 @@ function openModal(bean = null) {
 
         // Basic
         document.getElementById('form-title').value = bean.title;
+        document.getElementById('form-type').value = bean.type || 'Bean';
         document.getElementById('form-country').value = bean.country;
         document.getElementById('form-image').value = bean.imageUrl || 'assets/flags/default.svg';
         document.getElementById('form-description').value = bean.description;
@@ -191,6 +193,7 @@ function openModal(bean = null) {
         document.getElementById('form-id').value = '';
 
         // Defaults
+        document.getElementById('form-type').value = 'Bean';
         document.getElementById('form-image').value = 'assets/flags/default.svg';
         document.getElementById('form-acidity').value = 5;
         document.getElementById('form-sweetness').value = 5;

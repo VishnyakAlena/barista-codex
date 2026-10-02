@@ -46,6 +46,7 @@ function parseBeans(beansArr:beanType[]):SmallBeanType[]{
     return beansArr.map(bean => ({
         id: bean.id,
         title: bean.title,
+        type: bean.type,
         description: bean.description,
         imageUrl: bean.imageUrl
     }))
