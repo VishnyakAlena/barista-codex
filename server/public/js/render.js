@@ -1,8 +1,9 @@
+import { handleLangChange } from './app.js';
 /**
  * Renders the sidebar list
  */
 
-export function renderBeanList(beans, onSelect) {
+export function renderBeanList(beans, onSelect, lang) {
     const listContainer = document.getElementById('bean-list');
     listContainer.innerHTML = '';
 
@@ -13,8 +14,6 @@ export function renderBeanList(beans, onSelect) {
         // но логика active реализуется через клик ниже.
 
         const imgUrl = bean.imageUrl || 'assets/flags/default.svg';
-
-        console.log("Данные, которые пришли с сервера:", bean);
 
         const typeKey = `ui.${(bean.type || 'bean').toLowerCase()}`;
 
@@ -37,12 +36,13 @@ export function renderBeanList(beans, onSelect) {
         
         listContainer.appendChild(item);
     });
+    handleLangChange(lang);
 }
 
 /**
  * Renders the detail view
  */
-export function renderBeanDetails(bean) {
+export function renderBeanDetails(bean, lang) {
     // Top Info
     setText('detail-title', bean.title);
     const typeKey = `ui.${(bean.type || 'bean').toLowerCase()}`; 
@@ -84,6 +84,8 @@ export function renderBeanDetails(bean) {
 
     renderRecipeText('rec-v60-text', v60);
     renderRecipeText('rec-espresso-text', espresso);
+
+    handleLangChange(lang);
 }
 
 function renderRecipeText(elementId, recipe) {

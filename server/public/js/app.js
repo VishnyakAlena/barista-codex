@@ -129,6 +129,8 @@ async function loadList() {
         return;
     }
 
+    const selectedLang = document.getElementById('lang-select').value || 'en';
+
     renderBeanList(beans, async (id) => {
         currentBeanId = id;
         const bean = await apiClient.getBeanById(id);
@@ -136,11 +138,11 @@ async function loadList() {
         document.getElementById('placeholder-view').classList.add('hidden');
         document.getElementById('details-view').classList.remove('hidden');
 
-        renderBeanDetails(bean);
-    });
+        renderBeanDetails(bean, document.getElementById('lang-select').value || 'en');
+    }, selectedLang);
 }
 
-async function handleLangChange(lang) {
+export async function handleLangChange(lang) {
     const translations = await apiClient.getTranslations(lang);
 
     if(translations && Object.keys(translations).length > 0) {
