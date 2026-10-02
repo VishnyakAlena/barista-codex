@@ -2,17 +2,37 @@
   "name": "barista-codex",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc server/index.ts",
+    "start": "npx tsx server/index.ts",
+    "start2": "node --loader ts-node/esm server/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.2",
+    "ts-node": "^10.9.2",
     "typescript": "^7.0.2"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "chalk": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
+    "uuid": "^14.0.2",
+    "xliff": "^6.4.0"
+  },
+  "imports": {
+    "#routes/*": "./server/routes/*.ts",
+    "#services/*": "./server/services/*.ts",
+    "#modules/*": "./server/modules/*.ts",
+    "#middleWare/*": "./server/middleWares/*.ts",
+    "#types/*": "./server/types/*.ts"
   }
 }

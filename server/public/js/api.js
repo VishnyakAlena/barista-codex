@@ -13,7 +13,7 @@ export const apiClient = {
         if(response.type === 'success'){
             return response.data
         } else {
-           return [];
+            return [];
         }
     },
 
@@ -25,7 +25,7 @@ export const apiClient = {
         if(response.type === 'success'){
             return response.data
         } else {
-           return {};
+            return {};
         }
     },
 
@@ -42,7 +42,7 @@ export const apiClient = {
 
     // 4. UPDATE
     async updateBean(id, beanData) {
-     const res = await fetch(`${API_BASE}/beans/${id}`, {
+        const res = await fetch(`${API_BASE}/beans/${id}`, {
             method: 'PUT',
             body: JSON.stringify(beanData)
         });
@@ -53,7 +53,7 @@ export const apiClient = {
 
     // 5. DELETE
     async deleteBean(id) {
-     const res = await fetch(`${API_BASE}/beans/${id}`, {
+        const res = await fetch(`${API_BASE}/beans/${id}`, {
             method: 'DELETE',
         });
 
@@ -69,7 +69,7 @@ export const apiClient = {
         if(response.type === 'success'){
             return response.data
         } else {
-           return {};
+            return {};
         }
     }
 };
