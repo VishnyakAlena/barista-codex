@@ -15,17 +15,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =========================================================
 
 // Language Switcher
-document.getElementById('lang-select').addEventListener('change', (e) => handleLangChange(e.target.value));
-
 const langSelect = document.getElementById('lang-select');
 const langFlag = document.getElementById('current-lang-flag');
 const langText = document.getElementById('lang-text');
 
 function updateFlagIcon(lang) {
     const iconName = (lang === 'en') ? 'gb' : lang;
-
     langFlag.src = `assets/flags/${iconName}.svg`;
-
     langText.textContent = lang.toUpperCase();
 }
 
@@ -129,17 +125,17 @@ async function loadList() {
         return;
     }
 
-    const selectedLang = document.getElementById('lang-select').value || 'en';
-
     renderBeanList(beans, async (id) => {
         currentBeanId = id;
-        const bean = await apiClient.getBeanById(id);
+        const currentLang = document.getElementById('lang-select').value || 'en';
+        const bean = await apiClient.getBeanById(id, currentLang);
+        const translations = await apiClient.getTranslations(currentLang);
 
         document.getElementById('placeholder-view').classList.add('hidden');
         document.getElementById('details-view').classList.remove('hidden');
 
-        renderBeanDetails(bean, document.getElementById('lang-select').value || 'en');
-    }, selectedLang);
+        renderBeanDetails(bean, translations)
+    });
 }
 
 export async function handleLangChange(lang) {

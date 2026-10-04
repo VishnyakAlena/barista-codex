@@ -1,9 +1,8 @@
-import { handleLangChange } from './app.js';
 /**
  * Renders the sidebar list
  */
 
-export function renderBeanList(beans, onSelect, lang) {
+export function renderBeanList(beans, onSelect, translations) {
     const listContainer = document.getElementById('bean-list');
     listContainer.innerHTML = '';
 
@@ -36,13 +35,13 @@ export function renderBeanList(beans, onSelect, lang) {
         
         listContainer.appendChild(item);
     });
-    handleLangChange(lang);
+    applyTranslations(translations);
 }
 
 /**
  * Renders the detail view
  */
-export function renderBeanDetails(bean, lang) {
+export function renderBeanDetails(bean, translations) {
     // Top Info
     setText('detail-title', bean.title);
     const typeKey = `ui.${(bean.type || 'bean').toLowerCase()}`; 
@@ -50,9 +49,8 @@ export function renderBeanDetails(bean, lang) {
 
     if (typeEl) {
         typeEl.setAttribute('data-i18n', typeKey);
-        typeEl.textContent = bean.type || 'Bean'; 
+        typeEl.textContent = bean.type || 'Bean';
     }
-
 
     // Flag in detail view
     const flagImg = document.getElementById('detail-flag-img');
@@ -85,7 +83,7 @@ export function renderBeanDetails(bean, lang) {
     renderRecipeText('rec-v60-text', v60);
     renderRecipeText('rec-espresso-text', espresso);
 
-    handleLangChange(lang);
+    applyTranslations(translations);
 }
 
 function renderRecipeText(elementId, recipe) {
@@ -113,6 +111,7 @@ function renderRecipeText(elementId, recipe) {
 }
 
 export function applyTranslations(translations) {
+    if (!translations) return;
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
 
