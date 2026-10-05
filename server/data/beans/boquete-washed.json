@@ -1,28 +1,28 @@
 {
-  "title": "New Bean",
-  "type": "Dessert",
-  "country": "Panama",
+  "title": "Added bean",
+  "type": "Beverage",
+  "country": "Brazil",
   "description": {
-    "en": "New Bean description",
-    "it": "Descrizione del nuovo Bean",
-    "bg": "Описание на нов боб"
+    "en": "Added Bean description",
+    "it": "Aggiunta la descrizione del Bean",
+    "bg": "Добавено описание на бийн (bean)"
   },
-  "imageUrl": "assets/flags/pa.svg",
-  "roasterComment": "New Bean comment",
+  "imageUrl": "assets/flags/br.svg",
+  "roasterComment": "Added Bean comment",
   "details": {
     "process": "Washed",
-    "scaScore": 0.2,
-    "region": "Minas Gerais",
+    "scaScore": 2.7,
+    "region": "Boquete",
     "variety": [
-      "SL-54"
+      ""
     ]
   },
   "flavorProfile": {
     "notes": [
-      "Jasmine",
-      "Lemongrass",
-      "Bergamot",
-      "Honeysuckle"
+      "Hazelnut",
+      "Milk Chocolate",
+      "Caramel",
+      "Dried Date"
     ],
     "acidity": 5,
     "sweetness": 5,
@@ -53,5 +53,5 @@
       "steps": []
     }
   ],
-  "id": "be5a4d49-2871-45f8-9f82-3faa6bdbedc3"
+  "id": "e60b1aa3-e88b-4219-922c-7a6529845fa0"
 }

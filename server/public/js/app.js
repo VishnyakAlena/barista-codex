@@ -141,7 +141,7 @@ document.getElementById('bean-form').addEventListener('submit', async (e) => {
 // Category Tabs (Bean / Beverage / Dessert)
 // (Если у тебя в HTML есть эти кнопки, этот код нужен. Если нет - не помешает)
 document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', async (e) => {
         // Убираем active у всех
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         // Добавляем нажатой (ищем ближайшую кнопку, т.к. клик может быть по иконке внутри)
@@ -149,7 +149,33 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
         button.classList.add('active');
 
         // TODO: В Beta версии здесь будет фильтрация
-        console.log('Filter by:', button.dataset.type);
+        const selectedType = button.dataset.type ? button.dataset.type.toLowerCase() : 'all';
+        console.log('Фильтрация по типу:', selectedType);
+
+        if (currentBeanId) {
+            const openedBean = allBeansCached.find(b => b.id === currentBeanId);
+            
+            if (openedBean) {
+                const openedBeanType = (openedBean.type || 'bean').toLowerCase();
+                if (selectedType !== 'all' && openedBeanType !== selectedType) {
+                    resetView();
+                }
+            }
+        }
+
+        const currentLang = document.getElementById('lang-select').value || 'en';
+        const translations = await apiClient.getTranslations(currentLang);
+
+        if (selectedType === 'all') {
+            // Если выбрано "All", показываем весь кэшированный список
+            renderBeanList(allBeansCached, handleBeanSelection, translations);
+        } else {
+            // Иначе фильтруем кэш: оставляем только совпадения по типу
+            const filteredBeans = allBeansCached.filter(bean => 
+                bean.type && bean.type.toLowerCase() === selectedType
+            );
+            renderBeanList(filteredBeans, handleBeanSelection, translations);
+        }
     });
 });
 
@@ -170,17 +196,23 @@ async function loadList() {
         return;
     }
 
-    renderBeanList(beans, async (id) => {
-        currentBeanId = id;
-        const currentLang = document.getElementById('lang-select').value || 'en';
-        const bean = await apiClient.getBeanById(id, currentLang);
-        const translations = await apiClient.getTranslations(currentLang);
+    const currentLang = document.getElementById('lang-select').value || 'en';
+    const translations = await apiClient.getTranslations(currentLang);
 
-        document.getElementById('placeholder-view').classList.add('hidden');
-        document.getElementById('details-view').classList.remove('hidden');
+    renderBeanList(beans, handleBeanSelection, translations);
+}
 
-        renderBeanDetails(bean, translations)
-    });
+async function handleBeanSelection(id) {
+    currentBeanId = id;
+    
+    const currentLang = document.getElementById('lang-select').value || 'en';
+    const bean = await apiClient.getBeanById(id, currentLang);
+    const translations = await apiClient.getTranslations(currentLang);
+
+    document.getElementById('placeholder-view').classList.add('hidden');
+    document.getElementById('details-view').classList.remove('hidden');
+
+    renderBeanDetails(bean, translations);
 }
 
 export async function handleLangChange(lang) {

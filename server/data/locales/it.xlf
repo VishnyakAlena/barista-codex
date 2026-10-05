@@ -2,6 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="it">
   <file id="f1">
     <!-- Filters -->
+    <unit id="ui.all"><segment><source>All</source><target>Tutto</target></segment></unit>
     <unit id="ui.bean"><segment><source>Bean</source><target>Chicchi</target></segment></unit>
     <unit id="ui.beverage"><segment><source>Beverage</source><target>Bevande</target></segment></unit>
     <unit id="ui.dessert"><segment><source>Dessert</source><target>Dolci</target></segment></unit>
