@@ -85,6 +85,7 @@ document.getElementById('btn-delete').addEventListener('click', async () => {
 document.getElementById('btn-edit').addEventListener('click', async () => {
     if(!currentBeanId) return;
     const bean = await apiClient.getBeanById(currentBeanId);
+    console.log("Данные для формы редактирования:", bean); 
     openModal(bean);
 });
 
@@ -213,8 +214,12 @@ function openModal(bean = null) {
         document.getElementById('form-title').value = bean.title;
         document.getElementById('form-type').value = bean.type || 'Bean';
         document.getElementById('form-country').value = bean.country;
-        document.getElementById('form-image').value = bean.imageUrl || 'assets/flags/default.svg';
-        document.getElementById('form-description').value = bean.description;
+        document.getElementById('form-image').value = bean.imageUrl || 'assets/flags/default.png';
+
+        document.getElementById('form-description-en').value = bean.description?.en || '';
+        document.getElementById('form-description-it').value = bean.description?.it || '';
+        document.getElementById('form-description-bg').value = bean.description?.bg || '';
+
         document.getElementById('form-comment').value = bean.roasterComment || '';
 
         // Details

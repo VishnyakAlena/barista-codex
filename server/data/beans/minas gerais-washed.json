@@ -1,28 +1,28 @@
 {
-  "title": "Added bean",
+  "title": "New Bean",
   "type": "Bean",
-  "country": "Brazil",
+  "country": "Panama",
   "description": {
-    "en": "English",
-    "it": "Italian",
-    "bg": "Български"
+    "en": "New Bean description",
+    "it": "Descrizione del nuovo Bean",
+    "bg": "Описание на нов боб"
   },
-  "imageUrl": "assets/flags/ke.svg",
-  "roasterComment": "Comment",
+  "imageUrl": "assets/flags/pa.svg",
+  "roasterComment": "New Bean comment",
   "details": {
     "process": "Washed",
-    "scaScore": 1,
-    "region": "Unknown",
+    "scaScore": 0.2,
+    "region": "Minas Gerais",
     "variety": [
-      ""
+      "SL-54"
     ]
   },
   "flavorProfile": {
     "notes": [
-      "Hazelnut",
-      "Milk Chocolate",
-      "Caramel",
-      "Dried Date"
+      "Jasmine",
+      "Lemongrass",
+      "Bergamot",
+      "Honeysuckle"
     ],
     "acidity": 5,
     "sweetness": 5,
@@ -53,5 +53,5 @@
       "steps": []
     }
   ],
-  "id": "4291c51d-7633-4a17-abae-475b0c9993a6"
+  "id": "be5a4d49-2871-45f8-9f82-3faa6bdbedc3"
 }
