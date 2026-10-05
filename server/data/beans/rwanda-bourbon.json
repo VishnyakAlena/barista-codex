@@ -3,7 +3,11 @@
   "title": "Nyamasheke Red Bourbon",
   "type": "Bean", 
   "country": "Rwanda",
-  "description": "Bright and punchy with a syrupy mouthfeel. Typical Rwandan potato defect is absent in this high-grade lot.",
+    "description": {
+    "en": "Bright and punchy with a syrupy mouthfeel. Typical Rwandan potato defect is absent in this high-grade lot.",
+    "it": "Vivace e incisivo, con una consistenza sciropposa. Il tipico difetto della &quot;patata&quot; (tipico dei caffè ruandesi) è assente in questo lotto di alta qualità.",
+    "bg": "Ярък и въздействащ вкус с плътно, сирописто усещане в устата. В тази висококачествена партида липсва характерният за кафето от Руанда дефект „картоф“."
+  },
   "roasterComment": "We barely believe, but here is a natural Rwanda not for all money in the world. Sweet, with tones of dried fruits and chocolate.",
   "imageUrl": "assets/flags/rw.svg",
   "details": {

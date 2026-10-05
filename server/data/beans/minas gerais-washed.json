@@ -1,0 +1,57 @@
+{
+  "title": "Added bean",
+  "type": "Bean",
+  "country": "Brazil",
+  "description": {
+    "en": "English",
+    "it": "Italian",
+    "bg": "Български"
+  },
+  "imageUrl": "assets/flags/ke.svg",
+  "roasterComment": "Comment",
+  "details": {
+    "process": "Washed",
+    "scaScore": 1,
+    "region": "Unknown",
+    "variety": [
+      ""
+    ]
+  },
+  "flavorProfile": {
+    "notes": [
+      "Hazelnut",
+      "Milk Chocolate",
+      "Caramel",
+      "Dried Date"
+    ],
+    "acidity": 5,
+    "sweetness": 5,
+    "bitterness": 5
+  },
+  "recipes": [
+    {
+      "id": "r1",
+      "method": "V60",
+      "grindSize": "EK43 - 8.5",
+      "waterTemp": 96,
+      "doseIn": 18,
+      "doseOut": 300,
+      "timeTotal": "3:00",
+      "steps": [
+        "0:00 - Bloom 60g",
+        "0:45 - Pour to 300g"
+      ]
+    },
+    {
+      "id": "r1",
+      "method": "Espresso",
+      "grindSize": "Mythos - 3.8",
+      "waterTemp": 93,
+      "doseIn": 18,
+      "doseOut": 36,
+      "timeTotal": "28s",
+      "steps": []
+    }
+  ],
+  "id": "4291c51d-7633-4a17-abae-475b0c9993a6"
+}

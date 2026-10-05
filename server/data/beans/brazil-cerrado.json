@@ -2,7 +2,11 @@
   "title": "Cerrado Mineiro",
   "type": "Bean",
   "country": "Brazil",
-  "description": "Sweet, full-bodied coffee with low acidity. Perfect for milk drinks and classic espresso lovers.",
+  "description": {
+    "en": "Sweet, full-bodied coffee with low acidity. Perfect for milk drinks and classic espresso lovers.",
+    "it": "Caffè dolce e corposo, a bassa acidità. Ideale per bevande a base di latte e per gli amanti dell'espresso classico.",
+    "bg": "Сладко кафе с плътно тяло и ниска киселинност. Идеално за напитки с мляко и за любителите на класическото еспресо."
+  },
   "imageUrl": "assets/flags/br.svg",
   "roasterComment": "A reliable classic. This lot is exceptionally clean for a natural process, bringing pure chocolate joy to your morning cup.",
   "details": {

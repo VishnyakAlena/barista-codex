@@ -2,6 +2,7 @@ import { apiClient } from './api.js';
 import { renderBeanList, renderBeanDetails, applyTranslations } from './render.js';
 
 // STATE
+let allBeansCached = []; 
 let currentBeanId = null;
 
 // INIT
@@ -25,10 +26,45 @@ function updateFlagIcon(lang) {
     langText.textContent = lang.toUpperCase();
 }
 
-langSelect.addEventListener('change', (e) => {
+langSelect.addEventListener('change', async (e) => {
     const newLang = e.target.value;
-    handleLangChange(newLang);
     updateFlagIcon(newLang);
+
+    // 1. Запускаем запрос за XML-переводами интерфейса
+    const translationsPromise = apiClient.getTranslations(newLang);
+
+    // 2. Если карточка открыта, запускаем запрос полных деталей кофе ПАРАЛЛЕЛЬНО
+    let beanPromise = null;
+    if (typeof currentBeanId !== 'undefined' && currentBeanId) {
+        beanPromise = apiClient.getBeanById(currentBeanId);
+    }
+
+    // 3. Ждем оба сетевых ответа ОДНОВРЕМЕННО (это исключает рассинхронизацию!)
+    const [translations, fullBean] = await Promise.all([
+        translationsPromise,
+        beanPromise
+    ]);
+
+    // 4. МГНОВЕННО перерисовываем боковой список
+    if (typeof allBeansCached !== 'undefined' && allBeansCached.length > 0) {
+        renderBeanList(allBeansCached, async (id) => {
+            currentBeanId = id;
+            const clickBean = await apiClient.getBeanById(id);
+            const clickTranslations = await apiClient.getTranslations(newLang);
+
+            document.getElementById('placeholder-view').classList.add('hidden');
+            document.getElementById('details-view').classList.remove('hidden');
+
+            renderBeanDetails(clickBean, clickTranslations); 
+        }, translations);
+    } else {
+        await loadList();
+    }
+
+    // 5. МГНОВЕННО и одновременно со списком обновляем детальную карточку полными данными
+    if (fullBean) {
+        renderBeanDetails(fullBean, translations);
+    }
 });
 
 // Init
@@ -59,12 +95,19 @@ document.getElementById('btn-cancel').addEventListener('click', closeModal);
 // Form Submit
 document.getElementById('bean-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const englishText = document.getElementById('form-description-en').value.trim();
+    const italianText = document.getElementById('form-description-it').value.trim();
+    const bulgarianText = document.getElementById('form-description-bg').value.trim();
 
     const formData = {
         title: document.getElementById('form-title').value,
         type: document.getElementById('form-type').value,
         country: document.getElementById('form-country').value,
-        description: document.getElementById('form-description').value,
+        description: {
+            en: englishText,            
+            it: italianText || englishText, 
+            bg: bulgarianText || englishText 
+        },
         imageUrl: document.getElementById('form-image').value,
         roasterComment: document.getElementById('form-comment').value,
 
@@ -119,6 +162,7 @@ async function loadList() {
     listContainer.innerHTML = '<div class="loading">Loading...</div>';
 
     const beans = await apiClient.getAllBeans();
+    allBeansCached = beans;
 
     if (!beans || beans.length === 0) {
         listContainer.innerHTML = '<div class="empty-msg">No beans found. Add one!</div>';

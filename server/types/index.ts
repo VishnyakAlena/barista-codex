@@ -33,7 +33,7 @@ export type beanType = {
   title: string,
   type: string,
   country: string,
-  description: string,
+  description: { en: string; it?: string; bg?: string; };
   roasterComment: string,
   imageUrl: string,
   details: BeanDetailsType,

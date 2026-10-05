@@ -3,6 +3,7 @@
  */
 
 export function renderBeanList(beans, onSelect, translations) {
+    const currentLang = document.getElementById('lang-select').value || 'en';
     const listContainer = document.getElementById('bean-list');
     listContainer.innerHTML = '';
 
@@ -20,7 +21,7 @@ export function renderBeanList(beans, onSelect, translations) {
             <div class="card-text">
                 <h2>${bean.title}</h2>
                 <p class="detail-type" data-i18n="${typeKey}">${bean.type}</p>
-                <p>${bean.description.substring(0, 60)}...</p>
+                <p>${(bean.description?.[currentLang]?.substring(0, 60) || bean.description?.['en']?.substring(0, 60) || '')}...</p>
             </div>
             <div class="card-flag-wrap">
                 <img src="${imgUrl}" class="card-flag" alt="Flag">
@@ -42,6 +43,8 @@ export function renderBeanList(beans, onSelect, translations) {
  * Renders the detail view
  */
 export function renderBeanDetails(bean, translations) {
+    if (!bean) return;
+    const currentLang = document.getElementById('lang-select').value || 'en';
     // Top Info
     setText('detail-title', bean.title);
     const typeKey = `ui.${(bean.type || 'bean').toLowerCase()}`; 
@@ -56,7 +59,7 @@ export function renderBeanDetails(bean, translations) {
     const flagImg = document.getElementById('detail-flag-img');
     if(flagImg) flagImg.src = bean.imageUrl || 'assets/flags/default.svg';
 
-    setText('detail-description', bean.description);
+    setText('detail-description', bean.description[currentLang] || bean.description['en']);
 
     // Attributes
     setText('detail-region', bean.details.region);
