@@ -1,17 +1,17 @@
 {
-  "title": "Added dessert",
-  "type": "Bean",
-  "country": "Brazil",
+  "title": "Added beverage",
+  "type": "Beverage",
+  "country": "Panama",
   "description": {
     "en": "Description",
     "it": "Descrizione",
     "bg": "Описание"
   },
-  "imageUrl": "assets/flags/br.svg",
+  "imageUrl": "assets/flags/pa.svg",
   "roasterComment": "Comment",
   "details": {
     "process": "Washed",
-    "scaScore": 1.7,
+    "scaScore": 1.9,
     "region": "Minas Gerais",
     "variety": [
       "SL-54"
@@ -53,5 +53,5 @@
       "steps": []
     }
   ],
-  "id": "1b8bb434-f344-449c-ada5-d4d58eb35bd6"
+  "id": "f70401d7-2ef2-4dbe-8c76-a3582a4239f4"
 }

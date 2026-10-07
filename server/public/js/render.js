@@ -13,8 +13,6 @@ export function renderBeanList(beans, onSelect, translations, currentBeanId) {
     beans.forEach(bean => {
         const item = document.createElement('div');
         item.className = 'card-item';
-        // Если bean.id равен currentId - можно добавить класс active,
-        // но логика active реализуется через клик ниже.
         if (activeId && activeId === bean.id) {
             item.classList.add('active');
         }

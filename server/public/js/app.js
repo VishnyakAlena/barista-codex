@@ -7,13 +7,11 @@ let currentBeanId = null;
 
 // INIT
 document.addEventListener('DOMContentLoaded', async () => {
-    // Умный старт: проверяем URL при первой загрузке страницы
     const urlParams = new URLSearchParams(window.location.search);
     const typeParam = urlParams.get('type') || 'all';
 
     currentBeanId = localStorage.getItem('activeBeanId');
 
-    // Автоматически подсвечиваем нужную БЭМ-вкладку при старте
     document.querySelectorAll('.category-nav__btn').forEach(btn => {
         const btnType = btn.dataset.type ? btn.dataset.type.toLowerCase() : 'all';
         if (btnType === typeParam.toLowerCase()) {
@@ -97,7 +95,6 @@ document.getElementById('btn-edit').addEventListener('click', async () => {
     openModal(bean);
 });
 
-// --- ВОТ ЭТА ВАЖНАЯ ЧАСТЬ, КОТОРАЯ МОГЛА ПРОПАСТЬ ---
 document.getElementById('btn-cancel').addEventListener('click', closeModal);
 // ----------------------------------------------------
 
@@ -149,7 +146,6 @@ document.getElementById('bean-form').addEventListener('submit', async (e) => {
 });
 
 // Category Tabs (Bean / Beverage / Dessert)
-// (Если у тебя в HTML есть эти кнопки, этот код нужен. Если нет - не помешает)
 document.querySelectorAll('.category-nav__btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
         // Добавляем нажатой (ищем ближайшую кнопку, т.к. клик может быть по иконке внутри)
@@ -318,19 +314,15 @@ function syncFormTabWithLanguage(lang) {
 // Переключение языковых вкладок внутри модального окна описания
 document.querySelectorAll('.language-tabs__btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-        // 1. Убираем класс active у всех кнопок вкладок формы
         document.querySelectorAll('.language-tabs__btn').forEach(b => b.classList.remove('language-tabs__btn--active'));
         
-        // 2. Делаем активной нажатую кнопку
         const clickedBtn = e.target;
         clickedBtn.classList.add('language-tabs__btn--active');
 
-        // 3. Скрываем весь контент вкладок описания
         document.querySelectorAll('.language-tabs__content').forEach(content => {
             content.style.display = 'none';
         });
 
-        // 4. Показываем textarea, соответствующую выбранному языку
         const targetLang = clickedBtn.dataset.lang;
         const targetContent = document.getElementById(`content-desc-${targetLang}`);
         if (targetContent) {

@@ -43,6 +43,7 @@ export const apiClient = {
             body: JSON.stringify(beanData)
         });
         const response =  await res.json();
+        return response;
     },
 
     // 4. UPDATE
@@ -52,8 +53,9 @@ export const apiClient = {
             body: JSON.stringify(beanData)
         });
 
-        const data =  await res.json();
-        console.log(data);
+        const response =  await res.json();
+        console.log(response);
+        return response;
     },
 
     // 5. DELETE
