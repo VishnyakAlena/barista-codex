@@ -19,16 +19,16 @@
     <div class="logo">Third Wave</div>
 
     <nav class="category-nav">
-        <button class="nav-btn active" data-type="all">
+        <button class="category-nav__btn category-nav__btn--active" data-type="all">
             <i data-lucide="layout-grid"></i> <span data-i18n="ui.all">All</span>
         </button>
-        <button class="nav-btn" data-type="bean">
+        <button class="category-nav__btn" data-type="bean">
             <i data-lucide="bean"></i> <span data-i18n="ui.bean">Bean</span>
         </button>
-        <button class="nav-btn" data-type="beverage">
+        <button class="category-nav__btn" data-type="beverage">
             <i data-lucide="cup-soda"></i> <span data-i18n="ui.beverage">Beverage</span>
         </button>
-        <button class="nav-btn" data-type="dessert">
+        <button class="category-nav__btn" data-type="dessert">
             <i data-lucide="cake-slice"></i> <span data-i18n="ui.dessert">Dessert</span>
         </button>
     </nav>
@@ -238,20 +238,30 @@
 
             <!-- Описания -->
             <div class="form-group"><label>Flavor Notes (comma separated)</label><input type="text" id="form-notes"></div>
-            <div class="form-group">
-                <label>Description (English)</label>
-                <textarea id="form-description-en" rows="2" required placeholder="Enter description in English..."></textarea>
+
+            <!-- Контейнер мультиязычного описания -->
+            <div class="form-group language-tabs">
+                <label>Description</label>
+                
+                <!-- Шапка вкладок для переключения языка описания -->
+                <div class="language-tabs__header">
+                    <button type="button" class="language-tabs__btn language-tabs__btn--active" data-lang="en">EN</button>
+                    <button type="button" class="language-tabs__btn" data-lang="it">IT</button>
+                    <button type="button" class="language-tabs__btn" data-lang="bg">BG</button>
+                </div>
+
+                <!-- Сами поля ввода -->
+                <div class="language-tabs__content" id="content-desc-en">
+                    <textarea id="form-description-en" rows="3" style="width: 100%;" required placeholder="Enter description in English..."></textarea>
+                </div>
+                <div class="language-tabs__content" id="content-desc-it" style="display: none;">
+                    <textarea id="form-description-it" rows="3" style="width: 100%;" placeholder="Inserisci una descrizione in italiano..."></textarea>
+                </div>
+                <div class="language-tabs__content" id="content-desc-bg" style="display: none;">
+                    <textarea id="form-description-bg" rows="3" style="width: 100%;" placeholder="Въведете описанието на български език..."></textarea>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label>Description (Italian)</label>
-                <textarea id="form-description-it" rows="2" placeholder="Enter a description in Italian...."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Description (Български)</label>
-                <textarea id="form-description-bg" rows="2" placeholder="Въведете описание на български..."></textarea>
-            </div>
             <div class="form-group"><label>Roaster's Comment</label><textarea id="form-comment" rows="2"></textarea></div>
 
             <div class="modal-actions">

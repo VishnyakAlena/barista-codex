@@ -85,7 +85,6 @@ document.getElementById('btn-delete').addEventListener('click', async () => {
 document.getElementById('btn-edit').addEventListener('click', async () => {
     if(!currentBeanId) return;
     const bean = await apiClient.getBeanById(currentBeanId);
-    console.log("Данные для формы редактирования:", bean); 
     openModal(bean);
 });
 
@@ -140,13 +139,13 @@ document.getElementById('bean-form').addEventListener('submit', async (e) => {
 
 // Category Tabs (Bean / Beverage / Dessert)
 // (Если у тебя в HTML есть эти кнопки, этот код нужен. Если нет - не помешает)
-document.querySelectorAll('.nav-btn').forEach(btn => {
+document.querySelectorAll('.category-nav__btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
         // Убираем active у всех
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.category-nav__btn').forEach(b => b.classList.remove('category-nav__btn--active'));
         // Добавляем нажатой (ищем ближайшую кнопку, т.к. клик может быть по иконке внутри)
-        const button = e.target.closest('.nav-btn');
-        button.classList.add('active');
+        const button = e.target.closest('.category-nav__btn');
+        button.classList.add('category-nav__btn--active');
 
         // TODO: В Beta версии здесь будет фильтрация
         const selectedType = button.dataset.type ? button.dataset.type.toLowerCase() : 'all';
@@ -238,6 +237,9 @@ function openModal(bean = null) {
     const modal = document.getElementById('bean-modal');
     modal.classList.remove('hidden'); // Убираем класс hidden, чтобы показать окно
 
+    const currentLang = document.getElementById('lang-select').value || 'en';
+    syncFormTabWithLanguage(currentLang);
+
     if (bean) {
         document.getElementById('modal-title').textContent = 'Edit Item';
         document.getElementById('form-id').value = bean.id;
@@ -280,7 +282,50 @@ function openModal(bean = null) {
     }
 }
 
+// Функция для принудительного переключения вкладки описания на язык страницы
+function syncFormTabWithLanguage(lang) {
+    document.querySelectorAll('.language-tabs__btn').forEach(b => b.classList.remove('language-tabs__btn--active'));
+    
+    const targetTab = document.querySelector(`.language-tabs__btn[data-lang="${lang}"]`);
+    if (targetTab) {
+        targetTab.classList.add('language-tabs__btn--active');
+    }
+
+    document.querySelectorAll('.language-tabs__content').forEach(c => c.style.display = 'none');
+    
+    const targetContent = document.getElementById(`content-desc-${lang}`);
+    if (targetContent) {
+        targetContent.style.display = 'block';
+    }
+}
+
+// Переключение языковых вкладок внутри модального окна описания
+document.querySelectorAll('.language-tabs__btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        // 1. Убираем класс active у всех кнопок вкладок формы
+        document.querySelectorAll('.language-tabs__btn').forEach(b => b.classList.remove('language-tabs__btn--active'));
+        
+        // 2. Делаем активной нажатую кнопку
+        const clickedBtn = e.target;
+        clickedBtn.classList.add('language-tabs__btn--active');
+
+        // 3. Скрываем весь контент вкладок описания
+        document.querySelectorAll('.language-tabs__content').forEach(content => {
+            content.style.display = 'none';
+        });
+
+        // 4. Показываем textarea, соответствующую выбранному языку
+        const targetLang = clickedBtn.dataset.lang;
+        const targetContent = document.getElementById(`content-desc-${targetLang}`);
+        if (targetContent) {
+            targetContent.style.display = 'block';
+        }
+    });
+});
+
 function closeModal() {
     const modal = document.getElementById('bean-modal');
     modal.classList.add('hidden'); // Добавляем класс hidden, чтобы скрыть
+    const currentLang = document.getElementById('lang-select').value || 'en';
+    syncFormTabWithLanguage(currentLang);
 }
