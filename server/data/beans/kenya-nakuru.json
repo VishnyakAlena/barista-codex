@@ -1,8 +1,13 @@
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
   "title": "Nakuru AB",
+  "type": "Bean", 
   "country": "Kenya",
-  "description": "Bright, berry-like, slightly citrusy, slightly tart like ripe persimmon and sweet like rosehip compote.",
+    "description": {
+      "en": "Bright, berry-like, slightly citrusy, slightly tart like ripe persimmon and sweet like rosehip compote.",
+      "it": "Vivace, con note di frutti di bosco e un leggero tocco agrumato; lievemente acidulo come il cachi maturo e dolce come la composta di rosa canina.",
+      "bg": "Ярък, с нотки на горски плодове и лек цитрусов нюанс; леко стипчив като зряло райско ябълка и сладък като компот от шипки."
+    },
   "roasterComment": "A textbook Kenyan coffee. The acidity is vibrant but balanced by a deep sweetness. It shines best on filter methods.",
   "imageUrl": "assets/flags/ke.svg",
   "details": {

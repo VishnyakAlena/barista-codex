@@ -1,0 +1,57 @@
+{
+  "title": "Added beverage",
+  "type": "Beverage",
+  "country": "Panama",
+  "description": {
+    "en": "Description",
+    "it": "Descrizione",
+    "bg": "Описание"
+  },
+  "imageUrl": "assets/flags/pa.svg",
+  "roasterComment": "Comment",
+  "details": {
+    "process": "Washed",
+    "scaScore": 1.9,
+    "region": "Minas Gerais",
+    "variety": [
+      "SL-54"
+    ]
+  },
+  "flavorProfile": {
+    "notes": [
+      "Hazelnut",
+      "Milk Chocolate",
+      "Caramel",
+      "Dried Date"
+    ],
+    "acidity": 5,
+    "sweetness": 5,
+    "bitterness": 5
+  },
+  "recipes": [
+    {
+      "id": "r1",
+      "method": "V60",
+      "grindSize": "EK43 - 8.5",
+      "waterTemp": 96,
+      "doseIn": 18,
+      "doseOut": 300,
+      "timeTotal": "3:00",
+      "steps": [
+        "0:00 - Bloom 60g",
+        "0:45 - Pour to 300g"
+      ]
+    },
+    {
+      "id": "r1",
+      "method": "Espresso",
+      "grindSize": "Mythos - 3.8",
+      "waterTemp": 93,
+      "doseIn": 18,
+      "doseOut": 36,
+      "timeTotal": "28s",
+      "steps": []
+    }
+  ],
+  "id": "f70401d7-2ef2-4dbe-8c76-a3582a4239f4"
+}

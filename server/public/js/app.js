@@ -2,12 +2,30 @@ import { apiClient } from './api.js';
 import { renderBeanList, renderBeanDetails, applyTranslations } from './render.js';
 
 // STATE
+let allBeansCached = []; 
 let currentBeanId = null;
 
 // INIT
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadList();
-    handleLangChange('en');
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get('type') || 'all';
+
+    currentBeanId = localStorage.getItem('activeBeanId');
+
+    document.querySelectorAll('.category-nav__btn').forEach(btn => {
+        const btnType = btn.dataset.type ? btn.dataset.type.toLowerCase() : 'all';
+        if (btnType === typeParam.toLowerCase()) {
+            btn.classList.add('category-nav__btn--active');
+        } else {
+            btn.classList.remove('category-nav__btn--active');
+        }
+    });
+
+    await loadList(typeParam);
+
+    if (currentBeanId) {
+        await handleBeanSelection(currentBeanId);
+    }
 });
 
 // =========================================================
@@ -15,24 +33,43 @@ document.addEventListener('DOMContentLoaded', async () => {
 // =========================================================
 
 // Language Switcher
-document.getElementById('lang-select').addEventListener('change', (e) => handleLangChange(e.target.value));
-
 const langSelect = document.getElementById('lang-select');
 const langFlag = document.getElementById('current-lang-flag');
 const langText = document.getElementById('lang-text');
 
 function updateFlagIcon(lang) {
     const iconName = (lang === 'en') ? 'gb' : lang;
-
     langFlag.src = `assets/flags/${iconName}.svg`;
-
     langText.textContent = lang.toUpperCase();
 }
 
-langSelect.addEventListener('change', (e) => {
+langSelect.addEventListener('change', async (e) => {
     const newLang = e.target.value;
-    handleLangChange(newLang);
     updateFlagIcon(newLang);
+
+    const translationsPromise = apiClient.getTranslations(newLang);
+
+    let beanPromise = null;
+    if (typeof currentBeanId !== 'undefined' && currentBeanId) {
+        beanPromise = apiClient.getBeanById(currentBeanId);
+    }
+
+    const [translations, fullBean] = await Promise.all([
+        translationsPromise,
+        beanPromise
+    ]);
+
+    const activeNavBtn = document.querySelector('.category-nav__btn--active');
+    
+    const currentFilterType = activeNavBtn && activeNavBtn.dataset.type 
+        ? activeNavBtn.dataset.type.toLowerCase() 
+        : 'all';
+
+    await loadList(currentFilterType);
+
+    if (fullBean) {
+        renderBeanDetails(fullBean, translations);
+    }
 });
 
 // Init
@@ -46,7 +83,9 @@ document.getElementById('btn-delete').addEventListener('click', async () => {
     if(confirm('Are you sure you want to delete this bean?')) {
         await apiClient.deleteBean(currentBeanId);
         resetView();
-        await loadList();
+        const activeNavBtn = document.querySelector('.category-nav__btn--active');
+        const currentFilterType = activeNavBtn && activeNavBtn.dataset.type ? activeNavBtn.dataset.type.toLowerCase() : 'all';
+        await loadList(currentFilterType);
     }
 });
 
@@ -56,18 +95,25 @@ document.getElementById('btn-edit').addEventListener('click', async () => {
     openModal(bean);
 });
 
-// --- ВОТ ЭТА ВАЖНАЯ ЧАСТЬ, КОТОРАЯ МОГЛА ПРОПАСТЬ ---
 document.getElementById('btn-cancel').addEventListener('click', closeModal);
 // ----------------------------------------------------
 
 // Form Submit
 document.getElementById('bean-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const englishText = document.getElementById('form-description-en').value.trim();
+    const italianText = document.getElementById('form-description-it').value.trim();
+    const bulgarianText = document.getElementById('form-description-bg').value.trim();
 
     const formData = {
         title: document.getElementById('form-title').value,
+        type: document.getElementById('form-type').value,
         country: document.getElementById('form-country').value,
-        description: document.getElementById('form-description').value,
+        description: {
+            en: englishText,            
+            it: italianText || englishText, 
+            bg: bulgarianText || englishText 
+        },
         imageUrl: document.getElementById('form-image').value,
         roasterComment: document.getElementById('form-comment').value,
 
@@ -94,21 +140,52 @@ document.getElementById('bean-form').addEventListener('submit', async (e) => {
     }
 
     closeModal();
-    await loadList();
+    const activeNavBtn = document.querySelector('.category-nav__btn--active');
+    const currentFilterType = activeNavBtn && activeNavBtn.dataset.type ? activeNavBtn.dataset.type.toLowerCase() : 'all';
+    await loadList(currentFilterType);
 });
 
 // Category Tabs (Bean / Beverage / Dessert)
-// (Если у тебя в HTML есть эти кнопки, этот код нужен. Если нет - не помешает)
-document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        // Убираем active у всех
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+document.querySelectorAll('.category-nav__btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
         // Добавляем нажатой (ищем ближайшую кнопку, т.к. клик может быть по иконке внутри)
-        const button = e.target.closest('.nav-btn');
-        button.classList.add('active');
+        const button = e.target.closest('.category-nav__btn');
+        if (!button) return;
+
+        // Убираем active у всех
+        document.querySelectorAll('.category-nav__btn').forEach(b => b.classList.remove('category-nav__btn--active'));
+        
+        button.classList.add('category-nav__btn--active');
 
         // TODO: В Beta версии здесь будет фильтрация
-        console.log('Filter by:', button.dataset.type);
+        const selectedType = button.dataset.type ? button.dataset.type.toLowerCase() : 'all';
+        console.log('Фильтрация по типу:', selectedType);
+
+        const urlObj = new URL(window.location.href);
+        if (selectedType === 'all') {
+            urlObj.searchParams.delete('type'); 
+        } else {
+            urlObj.searchParams.set('type', selectedType); 
+        }
+        
+        window.history.replaceState({}, '', urlObj.pathname + urlObj.search);
+        
+        if (currentBeanId) {
+            const openedBean = allBeansCached.find(b => b.id === currentBeanId);
+            
+            if (openedBean) {
+                const openedBeanType = (openedBean.type || 'bean').toLowerCase();
+                if (selectedType !== 'all' && openedBeanType !== selectedType) {
+                    resetView();
+                }
+            }
+        }
+
+        try {
+            await loadList(selectedType);
+        } catch (error) {
+            console.error("Ошибка при отправке запроса фильтрации:", error);
+        }
     });
 });
 
@@ -117,29 +194,38 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 // LOGIC FUNCTIONS
 // =========================================================
 
-async function loadList() {
+async function loadList(type='all') {
     const listContainer = document.getElementById('bean-list');
     listContainer.innerHTML = '<div class="loading">Loading...</div>';
 
-    const beans = await apiClient.getAllBeans();
+    const beans = await apiClient.getAllBeans(type);
+    allBeansCached = beans;
 
     if (!beans || beans.length === 0) {
         listContainer.innerHTML = '<div class="empty-msg">No beans found. Add one!</div>';
         return;
     }
 
-    renderBeanList(beans, async (id) => {
-        currentBeanId = id;
-        const bean = await apiClient.getBeanById(id);
+    const currentLang = document.getElementById('lang-select').value || 'en';
+    const translations = await apiClient.getTranslations(currentLang);
 
-        document.getElementById('placeholder-view').classList.add('hidden');
-        document.getElementById('details-view').classList.remove('hidden');
-
-        renderBeanDetails(bean);
-    });
+    renderBeanList(beans, handleBeanSelection, translations, currentBeanId);
 }
 
-async function handleLangChange(lang) {
+async function handleBeanSelection(id) {
+    currentBeanId = id;
+    
+    const currentLang = document.getElementById('lang-select').value || 'en';
+    const bean = await apiClient.getBeanById(id, currentLang);
+    const translations = await apiClient.getTranslations(currentLang);
+
+    document.getElementById('placeholder-view').classList.add('hidden');
+    document.getElementById('details-view').classList.remove('hidden');
+
+    renderBeanDetails(bean, translations);
+}
+
+export async function handleLangChange(lang) {
     const translations = await apiClient.getTranslations(lang);
 
     if(translations && Object.keys(translations).length > 0) {
@@ -149,6 +235,7 @@ async function handleLangChange(lang) {
 
 function resetView() {
     currentBeanId = null;
+    localStorage.removeItem('activeBeanId');
     document.getElementById('placeholder-view').classList.remove('hidden');
     document.getElementById('details-view').classList.add('hidden');
 }
@@ -162,15 +249,23 @@ function openModal(bean = null) {
     const modal = document.getElementById('bean-modal');
     modal.classList.remove('hidden'); // Убираем класс hidden, чтобы показать окно
 
+    const currentLang = document.getElementById('lang-select').value || 'en';
+    syncFormTabWithLanguage(currentLang);
+
     if (bean) {
         document.getElementById('modal-title').textContent = 'Edit Item';
         document.getElementById('form-id').value = bean.id;
 
         // Basic
         document.getElementById('form-title').value = bean.title;
+        document.getElementById('form-type').value = bean.type || 'Bean';
         document.getElementById('form-country').value = bean.country;
-        document.getElementById('form-image').value = bean.imageUrl || 'assets/flags/default.svg';
-        document.getElementById('form-description').value = bean.description;
+        document.getElementById('form-image').value = bean.imageUrl || 'assets/flags/default.png';
+
+        document.getElementById('form-description-en').value = bean.description?.en || '';
+        document.getElementById('form-description-it').value = bean.description?.it || '';
+        document.getElementById('form-description-bg').value = bean.description?.bg || '';
+
         document.getElementById('form-comment').value = bean.roasterComment || '';
 
         // Details
@@ -191,6 +286,7 @@ function openModal(bean = null) {
         document.getElementById('form-id').value = '';
 
         // Defaults
+        document.getElementById('form-type').value = 'Bean';
         document.getElementById('form-image').value = 'assets/flags/default.svg';
         document.getElementById('form-acidity').value = 5;
         document.getElementById('form-sweetness').value = 5;
@@ -198,7 +294,46 @@ function openModal(bean = null) {
     }
 }
 
+// Функция для принудительного переключения вкладки описания на язык страницы
+function syncFormTabWithLanguage(lang) {
+    document.querySelectorAll('.language-tabs__btn').forEach(b => b.classList.remove('language-tabs__btn--active'));
+    
+    const targetTab = document.querySelector(`.language-tabs__btn[data-lang="${lang}"]`);
+    if (targetTab) {
+        targetTab.classList.add('language-tabs__btn--active');
+    }
+
+    document.querySelectorAll('.language-tabs__content').forEach(c => c.style.display = 'none');
+    
+    const targetContent = document.getElementById(`content-desc-${lang}`);
+    if (targetContent) {
+        targetContent.style.display = 'block';
+    }
+}
+
+// Переключение языковых вкладок внутри модального окна описания
+document.querySelectorAll('.language-tabs__btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.language-tabs__btn').forEach(b => b.classList.remove('language-tabs__btn--active'));
+        
+        const clickedBtn = e.target;
+        clickedBtn.classList.add('language-tabs__btn--active');
+
+        document.querySelectorAll('.language-tabs__content').forEach(content => {
+            content.style.display = 'none';
+        });
+
+        const targetLang = clickedBtn.dataset.lang;
+        const targetContent = document.getElementById(`content-desc-${targetLang}`);
+        if (targetContent) {
+            targetContent.style.display = 'block';
+        }
+    });
+});
+
 function closeModal() {
     const modal = document.getElementById('bean-modal');
     modal.classList.add('hidden'); // Добавляем класс hidden, чтобы скрыть
+    const currentLang = document.getElementById('lang-select').value || 'en';
+    syncFormTabWithLanguage(currentLang);
 }

@@ -1,8 +1,13 @@
 {
   "id": "6a4d6bcd-aafd-4b2d-9b5d-ab8dfbbd4add",
   "title": "Sumatra Mandheling",
+  "type": "Bean", 
   "country": "Indonesia",
-  "description": "Heavy body with low acidity. Known for its earthy, spicy, and woody characteristics.",
+    "description": {
+    "en": "Heavy body with low acidity. Known for its earthy, spicy, and woody characteristics.",
+    "it": "Corpo corposo e bassa acidità. Noto per le sue caratteristiche terrose, speziate e legnose.",
+    "bg": "Плътно тяло с ниска киселинност. Отличава се със земни, пикантни и дървесни нотки."
+  },
   "roasterComment": "Not for everyone, but loved by many. It's intense, earthy, and has practically zero acidity. A true comfort coffee.",
   "imageUrl": "assets/flags/id.svg",
   "details": {

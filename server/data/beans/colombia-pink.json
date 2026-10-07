@@ -1,8 +1,13 @@
 {
   "id": "3d7d6bcd-ddfd-4b2d-9b5d-ab8dfbbd4daa",
   "title": "Huila Pink Bourbon",
+  "type": "Bean", 
   "country": "Colombia",
-  "description": "Complex and juicy. The anaerobic fermentation brings out exotic fruit notes and a yogurt-like body.",
+    "description": {
+      "en": "Complex and juicy. The anaerobic fermentation brings out exotic fruit notes and a yogurt-like body.",
+      "it": "ItalComplesso e succoso. La fermentazione anaerobica esalta note di frutta esotica e una consistenza simile allo yogurt.ian",
+      "bg": "Комплексно и сочно. Анаеробната ферментация разгръща нотки на екзотични плодове и плътно тяло, напомнящо за кисело мляко."
+    },
   "roasterComment": "Pink Bourbon is a rare mutation, and combined with anaerobic fermentation, it creates a flavor bomb of tropical fruits.",
   "imageUrl": "assets/flags/co.svg",
   "details": {

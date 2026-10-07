@@ -31,8 +31,9 @@ type RecipeType = {
 export type beanType = {
   id: string,
   title: string,
+  type: string,
   country: string,
-  description: string,
+  description: { en: string; it?: string; bg?: string; };
   roasterComment: string,
   imageUrl: string,
   details: BeanDetailsType,
@@ -40,7 +41,7 @@ export type beanType = {
   recipes: RecipeType[]
 }
 
-export type SmallBeanType = Pick<beanType, 'id' | 'title' | 'description' | 'imageUrl'>
+export type SmallBeanType = Pick<beanType, 'id' | 'title' | 'type' | 'description' | 'imageUrl'>
 
 export type BeanPath = {
   bean: beanType,

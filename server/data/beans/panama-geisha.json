@@ -1,8 +1,13 @@
 {
   "id": "5f5d6bcd-fffd-4b2d-9b5d-ab8dfbbd4faa",
   "title": "Boquete Geisha",
+  "type": "Bean", 
   "country": "Panama",
-  "description": "One of the most prized varieties in the world. Elegant, tea-like, and incredibly aromatic.",
+    "description": {
+      "en": "One of the most prized varieties in the world. Elegant, tea-like, and incredibly aromatic.",
+      "it": "Una delle varietà più pregiate al mondo. Elegante, con note che ricordano il tè e incredibilmente aromatico.",
+      "bg": "Един от най-ценените сортове в света. Елегантен, с нотки на чай и невероятно ароматен."
+    },
   "roasterComment": "The queen of coffee. Handle with care: use soft water and respect the delicate floral notes. A true luxury experience.",
   "imageUrl": "assets/flags/pa.svg",
   "details": {

@@ -1,8 +1,13 @@
 {
   "id": "9d1d6bcd-ddfd-4b2d-9b5d-ab8dfbbd4dee",
   "title": "Kayanza Natural",
+  "type": "Bean", 
   "country": "Burundi",
-  "description": "Funky and wild. High intensity fruit notes often compared to red wine or cooked plums.",
+  "description": {
+    "en": "Funky and wild. High intensity fruit notes often compared to red wine or cooked plums.",
+    "it": "Eccentrico e audace. Note fruttate di grande intensità, spesso paragonate al vino rosso o alle prugne cotte.",
+    "bg": "Ексцентричен и дързък. Отличава се с интензивни плодови нотки, често сравнявани с тези на червено вино или задушени сливи."
+  },
   "roasterComment": "For those who love experiments. It's wild, funky, and tastes almost like a fruit compote with a splash of rum.",
   "imageUrl": "assets/flags/bi.svg",
   "details": {

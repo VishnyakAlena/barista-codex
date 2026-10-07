@@ -1,8 +1,13 @@
 {
   "id": "8c2d6bcd-ccfd-4b2d-9b5d-ab8dfbbd4cdd",
   "title": "Popayan Sugarcane Decaf",
+  "type": "Bean", 
   "country": "Colombia",
-  "description": "Sweet and clean decaf processed using natural ethyl acetate derived from sugarcane. No chemical aftertaste.",
+    "description": {
+      "en": "Sweet and clean decaf processed using natural ethyl acetate derived from sugarcane. No chemical aftertaste.",
+      "it": "Un decaffeinato dolce e pulito, ottenuto utilizzando acetato di etile naturale derivato dalla canna da zucchero. Nessun retrogusto chimico.",
+      "bg": "Сладко и чисто безкофеиново кафе, обработено с естествен етилацетат, извлечен от захарна тръстика. Без химически послевкус."
+    },
   "roasterComment": "You won't believe it's decaf. The sugarcane process preserves all the sweetness, making it a perfect evening treat.",
   "imageUrl": "assets/flags/co.svg",
   "details": {
