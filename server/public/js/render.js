@@ -2,16 +2,22 @@
  * Renders the sidebar list
  */
 
-export function renderBeanList(beans, onSelect, translations) {
+export function renderBeanList(beans, onSelect, translations, currentBeanId) {
     const currentLang = document.getElementById('lang-select').value || 'en';
     const listContainer = document.getElementById('bean-list');
+    if (!listContainer) return;
     listContainer.innerHTML = '';
+
+    const activeId = currentBeanId || localStorage.getItem('activeBeanId');
 
     beans.forEach(bean => {
         const item = document.createElement('div');
         item.className = 'card-item';
         // Если bean.id равен currentId - можно добавить класс active,
         // но логика active реализуется через клик ниже.
+        if (activeId && activeId === bean.id) {
+            item.classList.add('active');
+        }
 
         const imgUrl = bean.imageUrl || 'assets/flags/default.svg';
 
@@ -31,6 +37,7 @@ export function renderBeanList(beans, onSelect, translations) {
         item.onclick = () => {
             document.querySelectorAll('.card-item').forEach(el => el.classList.remove('active'));
             item.classList.add('active');
+            localStorage.setItem('activeBeanId', bean.id);
             onSelect(bean.id);
         };
         
@@ -126,5 +133,5 @@ export function applyTranslations(translations) {
 
 function setText(id, text) {
     const el = document.getElementById(id);
-    if (el) el.textContent = text;
+    if (el) el.textContent = text 
 }

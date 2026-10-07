@@ -7,7 +7,27 @@ let currentBeanId = null;
 
 // INIT
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadList();
+    // Умный старт: проверяем URL при первой загрузке страницы
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get('type') || 'all';
+
+    currentBeanId = localStorage.getItem('activeBeanId');
+
+    // Автоматически подсвечиваем нужную БЭМ-вкладку при старте
+    document.querySelectorAll('.category-nav__btn').forEach(btn => {
+        const btnType = btn.dataset.type ? btn.dataset.type.toLowerCase() : 'all';
+        if (btnType === typeParam.toLowerCase()) {
+            btn.classList.add('category-nav__btn--active');
+        } else {
+            btn.classList.remove('category-nav__btn--active');
+        }
+    });
+
+    await loadList(typeParam);
+
+    if (currentBeanId) {
+        await handleBeanSelection(currentBeanId);
+    }
 });
 
 // =========================================================
@@ -47,27 +67,7 @@ langSelect.addEventListener('change', async (e) => {
         ? activeNavBtn.dataset.type.toLowerCase() 
         : 'all';
 
-    let beansToRender = allBeansCached;
-    if (currentFilterType !== 'all') {
-        beansToRender = allBeansCached.filter(bean => 
-            bean.type && bean.type.toLowerCase() === currentFilterType
-        );
-    }
-
-    if (typeof allBeansCached !== 'undefined' && allBeansCached.length > 0) {
-        renderBeanList(beansToRender, async (id) => {
-            currentBeanId = id;
-            const clickBean = await apiClient.getBeanById(id);
-            const clickTranslations = await apiClient.getTranslations(newLang);
-
-            document.getElementById('placeholder-view').classList.add('hidden');
-            document.getElementById('details-view').classList.remove('hidden');
-
-            renderBeanDetails(clickBean, clickTranslations); 
-        }, translations);
-    } else {
-        await loadList();
-    }
+    await loadList(currentFilterType);
 
     if (fullBean) {
         renderBeanDetails(fullBean, translations);
@@ -85,7 +85,9 @@ document.getElementById('btn-delete').addEventListener('click', async () => {
     if(confirm('Are you sure you want to delete this bean?')) {
         await apiClient.deleteBean(currentBeanId);
         resetView();
-        await loadList();
+        const activeNavBtn = document.querySelector('.category-nav__btn--active');
+        const currentFilterType = activeNavBtn && activeNavBtn.dataset.type ? activeNavBtn.dataset.type.toLowerCase() : 'all';
+        await loadList(currentFilterType);
     }
 });
 
@@ -141,23 +143,37 @@ document.getElementById('bean-form').addEventListener('submit', async (e) => {
     }
 
     closeModal();
-    await loadList();
+    const activeNavBtn = document.querySelector('.category-nav__btn--active');
+    const currentFilterType = activeNavBtn && activeNavBtn.dataset.type ? activeNavBtn.dataset.type.toLowerCase() : 'all';
+    await loadList(currentFilterType);
 });
 
 // Category Tabs (Bean / Beverage / Dessert)
 // (Если у тебя в HTML есть эти кнопки, этот код нужен. Если нет - не помешает)
 document.querySelectorAll('.category-nav__btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
-        // Убираем active у всех
-        document.querySelectorAll('.category-nav__btn').forEach(b => b.classList.remove('category-nav__btn--active'));
         // Добавляем нажатой (ищем ближайшую кнопку, т.к. клик может быть по иконке внутри)
         const button = e.target.closest('.category-nav__btn');
+        if (!button) return;
+
+        // Убираем active у всех
+        document.querySelectorAll('.category-nav__btn').forEach(b => b.classList.remove('category-nav__btn--active'));
+        
         button.classList.add('category-nav__btn--active');
 
         // TODO: В Beta версии здесь будет фильтрация
         const selectedType = button.dataset.type ? button.dataset.type.toLowerCase() : 'all';
         console.log('Фильтрация по типу:', selectedType);
 
+        const urlObj = new URL(window.location.href);
+        if (selectedType === 'all') {
+            urlObj.searchParams.delete('type'); 
+        } else {
+            urlObj.searchParams.set('type', selectedType); 
+        }
+        
+        window.history.replaceState({}, '', urlObj.pathname + urlObj.search);
+        
         if (currentBeanId) {
             const openedBean = allBeansCached.find(b => b.id === currentBeanId);
             
@@ -169,18 +185,10 @@ document.querySelectorAll('.category-nav__btn').forEach(btn => {
             }
         }
 
-        const currentLang = document.getElementById('lang-select').value || 'en';
-        const translations = await apiClient.getTranslations(currentLang);
-
-        if (selectedType === 'all') {
-            // Если выбрано "All", показываем весь кэшированный список
-            renderBeanList(allBeansCached, handleBeanSelection, translations);
-        } else {
-            // Иначе фильтруем кэш: оставляем только совпадения по типу
-            const filteredBeans = allBeansCached.filter(bean => 
-                bean.type && bean.type.toLowerCase() === selectedType
-            );
-            renderBeanList(filteredBeans, handleBeanSelection, translations);
+        try {
+            await loadList(selectedType);
+        } catch (error) {
+            console.error("Ошибка при отправке запроса фильтрации:", error);
         }
     });
 });
@@ -190,11 +198,11 @@ document.querySelectorAll('.category-nav__btn').forEach(btn => {
 // LOGIC FUNCTIONS
 // =========================================================
 
-async function loadList() {
+async function loadList(type='all') {
     const listContainer = document.getElementById('bean-list');
     listContainer.innerHTML = '<div class="loading">Loading...</div>';
 
-    const beans = await apiClient.getAllBeans();
+    const beans = await apiClient.getAllBeans(type);
     allBeansCached = beans;
 
     if (!beans || beans.length === 0) {
@@ -205,7 +213,7 @@ async function loadList() {
     const currentLang = document.getElementById('lang-select').value || 'en';
     const translations = await apiClient.getTranslations(currentLang);
 
-    renderBeanList(beans, handleBeanSelection, translations);
+    renderBeanList(beans, handleBeanSelection, translations, currentBeanId);
 }
 
 async function handleBeanSelection(id) {
@@ -231,6 +239,7 @@ export async function handleLangChange(lang) {
 
 function resetView() {
     currentBeanId = null;
+    localStorage.removeItem('activeBeanId');
     document.getElementById('placeholder-view').classList.remove('hidden');
     document.getElementById('details-view').classList.add('hidden');
 }

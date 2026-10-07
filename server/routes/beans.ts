@@ -6,11 +6,15 @@ import { createData } from '#modules/utils';
 export const beansRouter = express.Router()
 
 beansRouter.get('/', async (req, res) => {
-    const allbeans = await beansService.getBeans()
+    const typeFilter = req.query.type as string || 'all';
+    
+    const allbeans = await beansService.getBeans(false, typeFilter)
 
     const statusCode = allbeans.type === dataTypes.ERROR ? 400 : 200
 
-    const parsedResponse = beansService.parseBeans(allbeans.data as beanType[])
+    const beansData = allbeans.type === dataTypes.SUCCESS ? (allbeans.data as beanType[]) : [];
+
+    const parsedResponse = beansService.parseBeans(beansData)
 
     res.status(statusCode).json(createData(dataTypes.SUCCESS, parsedResponse))
 });

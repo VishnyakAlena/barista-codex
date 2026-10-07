@@ -6,8 +6,13 @@ const API_BASE = 'http://localhost:3000/api';
 
 export const apiClient = {
     // 1. GET LIST
-    async getAllBeans() {
-        const res = await fetch(`${API_BASE}/beans`);
+    async getAllBeans(type = 'all') {
+        const normalizedType = (type || 'all').trim().toLowerCase();
+        const url = normalizedType !== 'all' 
+            ? `${API_BASE}/beans?type=${normalizedType}` 
+            : `${API_BASE}/beans`;
+
+        const res = await fetch(url);
         const response =  await res.json();
 
         if(response.type === 'success'){
@@ -57,8 +62,8 @@ export const apiClient = {
             method: 'DELETE',
         });
 
-        const data =  await res.json();
-        console.log(data);
+        const response =  await res.json();
+        return response;
     },
 
     // 6. LOCALIZATION
