@@ -8,7 +8,6 @@ let currentBeanId = null;
 // INIT
 document.addEventListener('DOMContentLoaded', async () => {
     await loadList();
-    handleLangChange('en');
 });
 
 // =========================================================
@@ -30,24 +29,33 @@ langSelect.addEventListener('change', async (e) => {
     const newLang = e.target.value;
     updateFlagIcon(newLang);
 
-    // 1. Запускаем запрос за XML-переводами интерфейса
     const translationsPromise = apiClient.getTranslations(newLang);
 
-    // 2. Если карточка открыта, запускаем запрос полных деталей кофе ПАРАЛЛЕЛЬНО
     let beanPromise = null;
     if (typeof currentBeanId !== 'undefined' && currentBeanId) {
         beanPromise = apiClient.getBeanById(currentBeanId);
     }
 
-    // 3. Ждем оба сетевых ответа ОДНОВРЕМЕННО (это исключает рассинхронизацию!)
     const [translations, fullBean] = await Promise.all([
         translationsPromise,
         beanPromise
     ]);
 
-    // 4. МГНОВЕННО перерисовываем боковой список
+    const activeNavBtn = document.querySelector('.category-nav__btn--active');
+    
+    const currentFilterType = activeNavBtn && activeNavBtn.dataset.type 
+        ? activeNavBtn.dataset.type.toLowerCase() 
+        : 'all';
+
+    let beansToRender = allBeansCached;
+    if (currentFilterType !== 'all') {
+        beansToRender = allBeansCached.filter(bean => 
+            bean.type && bean.type.toLowerCase() === currentFilterType
+        );
+    }
+
     if (typeof allBeansCached !== 'undefined' && allBeansCached.length > 0) {
-        renderBeanList(allBeansCached, async (id) => {
+        renderBeanList(beansToRender, async (id) => {
             currentBeanId = id;
             const clickBean = await apiClient.getBeanById(id);
             const clickTranslations = await apiClient.getTranslations(newLang);
@@ -61,7 +69,6 @@ langSelect.addEventListener('change', async (e) => {
         await loadList();
     }
 
-    // 5. МГНОВЕННО и одновременно со списком обновляем детальную карточку полными данными
     if (fullBean) {
         renderBeanDetails(fullBean, translations);
     }
